@@ -1,0 +1,533 @@
+---
+layout: default
+---
+
+{% assign image_path = "/assets/img/magasins/" %}
+
+<div class="page-head mb-4" style="background-image:url({{ image_path }}header_img.png);">
+  <div class="container pt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="#">Nos magasins</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page.titre }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 col-lg-4">
+
+      <div class="sticky-top left-col py-4">
+        <div class="card mb-4">
+          <div class="card-body px-xl-5 py-xl-4">
+            <div class="text-center py-2">
+              <img src="{{ image_path }}logo_lapeyre.png" class="circle mb-1 magasin-logo" alt="">
+              <div class="text-gray">
+                {{ page.type }}
+              </div>
+              <h1 class="h4 font-weight-bold mb-0">
+                {{ page.titre }}
+              </h1>
+              <div>
+                {% comment %}
+                  Set real dynamic value here
+                {% endcomment %}
+                {% assign rating = 4.6 %}
+
+                {% assign rating_calcul = rating %}
+                <span class="stars-wrapper">
+                  {% for i in (1..5) %}
+                    {% assign width_pct = rating_calcul | times: 100 %}
+                    {% assign rating_calcul = rating_calcul | minus: 1 %}
+                    <span class="star-wrapper">
+                      <span class="star" style="width:{{ width_pct }}%;">
+                      </span>
+                    </span>
+                  {% endfor %}
+                </span>
+                <span class="text-gray">({{ rating }})</span>
+              </div>
+              <div class="my-4">
+                <div class='row mt-2'>
+                  {% comment %}
+                    Set real dynamic value here
+                  {% endcomment %}
+                  {% assign open = true %}
+
+                  {% if open %}
+                    {% assign open_color = 'success' %}
+                  {% else %}
+                    {% assign open_color = 'danger' %}
+                  {% endif %}
+                  <div class="col-2 pr-0 mt-1"><span class="dot bg-{{ open_color }}"></span></div>
+                  <div class="col-10 text-left my-1 pl-0 text-{{ open_color }}">
+                    Ouvert jusqu'à 18h00
+                  </div>
+                </div>
+                <div class='row mt-2'>
+                  <div class="col-2 mt-2 pr-0"><i class="icon icon-map"></i></div>
+                  <div class="col-10 text-left my-1 pl-0">
+                    {{ page.adresse.numVoie }}<br/>
+                    {{ page.adresse.codePostal }} {{ page.adresse.ville }}
+                  </div>
+                </div>
+                <div class='row mt-2'>
+                  <div class="col-2 mt-2 pr-0"><i class="icon icon-tel"></i></div>
+                  <div class="col-10 text-left my-1 pl-0">
+                    {% for element in page.contacts %}
+                        <div>{{ element.numero }} ({{ element.libelle }})</div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="btn btn-primary btn-block px-0 px-lg-3">Prendre un rendez-vous en magasin</a>
+            </div>
+          </div>
+        </div>
+
+        <ul class="nav nav-pills flex-column mb-4 d-none d-md-block">
+            <li class="nav-item">
+              <a class="nav-link active" href="#presentation">Présentation <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#horaires">Horaires</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#acces">Accès</a>
+            </li>
+            {% if page.type == "Boutique" %}
+            <li class="nav-item">
+              <a class="nav-link" href="#evenement">Evenement</a>
+            </li>
+            {% endif %}
+            {% if page.type == "Magasin" %}
+            <li class="nav-item">
+              <a class="nav-link" href="#visite3d">Visite 3D</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Services</a>
+            </li>
+            {% if page.type != "Boutique" %}
+            <li class="nav-item">
+              <a class="nav-link" href="#realisations">Réalisations</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="#avis">Avis</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#motduresponsable">Le mot du responsable</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#projet">Préparez votre projet</a>
+            </li>
+          </ul>
+
+          <a href="#" class="btn btn-outline-primary btn-sm ml-3 d-none d-md-inline-block">Prendre un rendez-vous</a>
+
+      </div>
+    </div>
+
+    <div class="col-md-7 col-lg-8">
+      <h2 class="h5 font-weight-bold mb-1" id="presentation">Votre magasin Lapeyre à {{ page.adresse.ville }}</h2>
+      <div class="mb-3">
+        <div class="mb-1">
+          Achetez en magasin ou commandez en ligne et venez le récupérer en moins de 2 heures !
+        </div>
+      </div>
+
+      <div class="bg-primary p-3 text-white mb-4 rounded">
+        <div class="font-weight-bold">
+          Semaine du bois du 2 au 7 novembre
+        </div>
+        En association avec la région Nouvelle-Aquitaine, votre magasin ouvre son atelier au grand public. Venez découvrir le travail et discuter avec nos menuisiers.
+      </div>
+
+      <div class="card mb-4" id="horaires">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Horaires
+          </h3>
+          <div class="d-xl-flex align-items-start bd-highlight text-gray">
+            {% for horaire in page.horaires %}
+              <div class="p-xl-2 flex-fill schedule">
+                <div class="d-xl-block mb-2 schedule--day">
+                  {{ horaire.jour }} {{ forloop.index }}
+                </div>
+                <div class="d-xl-block mb-2 schedule--content">
+                  <span class="d-xl-block schedule--content-element"><small class="font-weight-bold">Magasin</small></span>
+                  <small>
+                    {% if horaire.open %}
+                      <span class="d-xl-block schedule--content-element">{{ horaire.ouverture_matin }}
+
+                      {% if horaire.fermeture_matin != "" and horaire.ouverture_apresmidi != "" %}
+                         - {{ horaire.fermeture_matin }}</span>
+                        <span class="schedule--content-element">{{ horaire.ouverture_apresmidi }} -
+                      {% else %}
+                       -
+                      {% endif %}
+
+                      {{ horaire.fermeture_apresmidi }}</span>
+                    {% else %}
+                      <span class="d-xl-block schedule--content-element">Fermé<br></span>
+                    {% endif %}
+                  </small>
+                  <br>
+                  <span class="d-xl-block schedule--content-element"><small class="font-weight-bold">Drive</small></span>
+                  <small>
+                    {% if horaire.open %}
+                      <span class="d-xl-block schedule--content-element">{{ horaire.ouverture_matin }}
+
+                      {% if horaire.fermeture_matin != "" and horaire.ouverture_apresmidi != "" %}
+                         - {{ horaire.fermeture_matin }}</span>
+                        <span class="schedule--hours">{{ horaire.ouverture_apresmidi }} -
+                      {% else %}
+                       -
+                      {% endif %}
+
+                      {{ horaire.fermeture_apresmidi }}</span>
+                    {% else %}
+                      <span class="d-xl-block schedule--hours">Fermé</span>
+                    {% endif %}
+                  </small>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            </div>
+          </div>
+
+      <div class="card mb-4" id="acces">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Accès
+          </h3>
+          <iframe
+            class="mb-2"
+            width="100%"
+            height="200"
+            frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBYGeZ4avcgpzwOr1M-BDmOtwYu9yRcUkI
+              &q={{ page.titre }}" allowfullscreen>
+          </iframe>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-1">
+                  <i class="icon icon-car"></i>
+                </div>
+                <div class="col-11 mb-3 mb-md-0">
+                  <div class="font-weight-bold mb-2">
+                    Accès véhicule
+                  </div>
+                  <div>
+                    200m après le rond point Tim Barthélémy
+                  </div>
+                  <div>
+                    Parking
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-1">
+                  <i class="icon icon-metro"></i>
+                </div>
+                <div class="col-11">
+                  <div class="font-weight-bold mb-2">
+                    Transport en commun
+                  </div>
+                  <div>
+                    {% comment %}
+                      Available classes: metro-n / metro-nbis
+                    {% endcomment %}
+                    <span class="metro metro-5">5</span>
+                    Arrêt Richard Lenoir
+                  </div>
+                  <div>
+                    <span class="bus">
+                      Bus 331
+                    </span>
+                    Arrêt Jaurès
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {% if page.type == "Boutique" %}
+      <div class="card mb-4" id="evenement">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Retour sur l'évènement
+          </h3>
+          <div class="row">
+            <div class="col-md-4">
+              <img src="https://picsum.photos/400/300" class="mt-2 w-100 mb-3 mb-md-0">
+            </div>
+            <div class="col-md-8">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae varius sem. Nulla varius nibh leo, vitae rhoncus magna lobortis in. Mauris a commodo ligula, nec feugiat sem. Nunc lorem ex, suscipit vel risus non, sagittis condimentum nulla.
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+
+      {% if page.type == "Magasin" %}
+      <div class="card mb-4" id="visite3d">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Visite 3D du magasin
+          </h3>
+          <iframe
+            class="bg-light"
+            width="100%"
+            height="200"
+            frameborder="0"
+            src="">
+          </iframe>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card mb-4" id="services">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Services
+          </h3>
+          <div class="row">
+            <div class="col-md-6 col-xl-3 py-1 px-1 px-lg-3">
+              <div class="service border border-light-gray text-center py-4 px-2 text-gray">
+                <div><img src="{{ image_path }}service_pose.png" alt="" class="mb-3"></div>
+                L'installation est faîte sur-mesure par des artisans qualifiés.
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3 py-1 px-1 px-lg-3">
+              <div class="service border border-light-gray text-center py-4 px-2 text-gray">
+                <div><img src="{{ image_path }}service_livraison.png" alt="" class="mb-3"></div>
+                Nous assurons la livraison de nos produits chez vous.
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3 py-1 px-1 px-lg-3">
+              <div class="service border border-light-gray text-center py-4 px-2 text-gray">
+                <div><img src="{{ image_path }}service_atelier.png" alt="" class="mb-3"></div>
+                Nos menuisiers sont à l'écoute pour réaliser vos projets sur-mesure.
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3 py-1 px-1 px-lg-3">
+              <div class="service border border-light-gray text-center py-4 px-2 text-gray">
+                <div><img src="{{ image_path }}service_conseil.png" alt="" class="mb-3"></div>
+                Nos conseillers sont disponibles pour vous rendre visite chez vous.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if page.type != "Boutique" %}
+      <div class="card mb-4" id="realisations">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Réalisations
+          </h3>
+          <div class="slider-wrapper">
+
+            {% for i in (1..2) %}
+              <div class="slide">
+                <div class="slide--img">
+                  <img src="{{ image_path }}slider_cuisine.png" class="w-100" alt="">
+                  <div class="arrow arrow__prev"></div>
+                  <div class="arrow arrow__next"></div>
+                </div>
+                <div class="slide--title font-weight-bold mt-2">
+                  <span class="text-primary pr-2">{{ i }} / {{ loop.length }}</span>
+                  Cuisine Twist design en ilôt
+                </div>
+                <div class="slide--text my-2">
+                  Je souhaitais une cuisines vivante pour transformer ma petite cuisine de 2,5 m². jean-Louis m’a aidé des plans à la pose, il a pensé à tout (électroménager, rangement,..) et a apporté plus de luminosité, je suis super ravie !
+                </div>
+                <div class="slide--author font-italic text-gray">
+                  <span class="font-weight-bold">Sandrine T.</span>, 39 ans, sa note :
+
+                  {% comment %}
+                    Set real dynamic value here
+                  {% endcomment %}
+                  {% assign rating = 3.5 %}
+
+                  <span class="stars-wrapper mini">
+                    {% for i in (1..5) %}
+                      {% assign width_pct = rating | times: 100 %}
+                      {% assign rating = rating | minus:1 %}
+                      <span class="star-wrapper">
+                        <span class="star" style="width:{{ width_pct }}%;">
+                        </span>
+                      </span>
+                    {% endfor %}
+                  </span>
+
+                </div>
+              </div>
+
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card mb-4" id="avis">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Avis
+          </h3>
+          <div class="row justify-content-center">
+            <div class="col-lg-6">
+
+              <div class="font-weight-bold mb-4 row align-items-center">
+                <div class="col-4 text-right d-none d-xl-block">
+                  <img src="{{ image_path }}logo_lapeyre.png" class="circle mb-1 magasin-logo small" alt="">
+                </div>
+                <div class="col-xl-8 text-center text-xl-left">
+                  <h4  class="font-weight-bold">{{ page.titre }}</h4>
+                  <div>
+                    {% comment %}
+                      Set real dynamic value here
+                    {% endcomment %}
+                    {% assign rating = 4.6 %}
+
+                    {% assign rating_calcul = rating %}
+                    <span class="stars-wrapper">
+                      {% for i in (1..5) %}
+                        {% assign width_pct = rating_calcul | times: 100 %}
+                        {% assign rating_calcul = rating_calcul | minus: 1 %}
+                        <span class="star-wrapper">
+                          <span class="star" style="width:{{ width_pct }}%;">
+                          </span>
+                        </span>
+                      {% endfor %}
+                    </span>
+                    <span class="text-gray">({{ rating }} / 5)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="text-center">
+            Grâce à l’expertise de nos équipes, l’exigence de nos clients est comblée et ils disent :
+          </div>
+          <div class="row mt-3">
+            {% for i in (1..2) %}
+              <div class="col-lg-6 mb-3 mb-lg-0">
+                <div class="avis position-relative border border-light-gray pt-5 pb-4 px-4">
+                  <div class="text-gray font-italic px-3 text-justify">
+                    Le contact avec la vendeuse a été très agréable et constructif, elle a bien pris en compte mes souhaits et mon budget. ça a été très rapide et bien fait !
+                  </div>
+                  {% comment %}
+                    Set real dynamic value here
+                  {% endcomment %}
+                  {% assign rating = 4 %}
+
+                  <div class="stars-wrapper text-center my-3">
+                    {% for i in (1..5) %}
+                      {% assign width_pct = rating | times: 100 %}
+                      {% assign rating = rating | minus:1 %}
+                      <span class="star-wrapper">
+                        <span class="star" style="width:{{ width_pct }}%;">
+                        </span>
+                      </span>
+                    {% endfor %}
+                  </div>
+
+                  <div>
+                    <span class="font-weight-bold">Jean-Yves B</span>, Verneuil-sur-Vienne (87430)
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="text-center mt-3">
+            <img src="{{ image_path }}logo_avis_verifies.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4" id="motduresponsable">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Le mot du responsable
+          </h3>
+          <div class="text-gray font-italic mt-3 mb-2 text-justify">
+            Moi et mon équipe, nous sommes heureux de vous accueillir dans notre magasin sur Limoges pour parler cuisine de l’aménagement durable de votre maison (menuiseries, cuisines, bains, fenêtres, portes, escaliers, rangements...).
+            <br/><br/>
+            Nous nous engageons à vous conseiller avec simplicité et efficacité sur les possibilités pour vos projets. Fort de son savoir-faire de distributeur-fabricant, Lapeyre propose des produits de qualité, adaptables et accessibles ainsi qu’une offre de conseils personnalisés et de nombreux services (atelier de menuiserie, installation, délai express...).
+            <br/><br/>
+            À très vite !
+            <br/><br/>
+          </div>
+          <div class="font-weight-bold">
+            Audrey Turpin
+          </div>
+          <div class="text-gray">
+            Responsable du magasin depuis 2003
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4" id="projet">
+        <div class="card-body">
+          <h3 class="card-title font-alt text-uppercase">
+            Préparez vote projet
+          </h3>
+          Vous souhaitez parler d’une projet en particulier ? N'hésitez pas à prendre de l’avance
+          <div class="d-lg-flex bd-highlight my-3 text-center row">
+            <div class="projet px-1 flex-fill col-4 col-lg-12 mb-2">
+              <div class="p-2 border border-light-gray">
+                <div><img src="{{ image_path }}projet_cuisine.png" alt="" class="my-4"></div>
+                Cuisine
+              </div>
+            </div>
+            <div class="projet px-1 flex-fill col-4 col-lg-12 mb-2">
+              <div class="p-2 border border-light-gray">
+                <div><img src="{{ image_path }}projet_fenetres.png" alt="" class="my-4"></div>
+                Fenêtres
+              </div>
+            </div>
+            <div class="projet px-1 flex-fill col-4 col-lg-12 mb-2">
+              <div class="p-2 border border-light-gray">
+                <div><img src="{{ image_path }}projet_sdb.png" alt="" class="my-4"></div>
+                Salle de bain
+              </div>
+            </div>
+            <div class="projet px-1 flex-fill col-4 col-lg-12 mb-2">
+              <div class="p-2 border border-light-gray">
+                <div><img src="{{ image_path }}projet_escaliers.png" alt="" class="my-4"></div>
+                Escaliers
+              </div>
+            </div>
+            <div class="projet px-1 flex-fill col-4 col-lg-12 mb-2">
+              <div class="p-2 border border-light-gray">
+                <div><img src="{{ image_path }}projet_autres.png" alt="" class="my-4"></div>
+                Autres
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <a href="#" class="btn btn-sm btn-primary">Prendre un rendez-vous</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
